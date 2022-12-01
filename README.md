@@ -239,6 +239,7 @@ Limitar los paquetes enviados (-c)
 Para limitar la cantidad de paquetes que enviamos, usamos la opción -c seguida del número de paquetes por enviar.
 
 `ping -c 4 www.google.com`
+
 uso-de-ping-para-limitar-paquetes-enviados.png
 Especificar el tamaño de los paquetes (-s)
 Para probar la conectividad con paquetes de diferentes tamaños se utiliza la opción -s seguido del tamaño del paquete que desees usar. El tamaño debe ser en bytes.
@@ -246,6 +247,7 @@ Para probar la conectividad con paquetes de diferentes tamaños se utiliza la op
 Para hacer pruebas con paquetes de 20 bytes escribimos:
 
 `ping -s 20 www.google.com`
+
 uso-de-ping-especificar-tamaño-de-paquetes.png
 Obtener el archivo de una página (curl | wget)
 Podemos obtener archivos que nos proporcione un sitio web o dirección IP con el comando curl. Este te mostrará la información que haya encontrado en la consola.
@@ -276,3 +278,61 @@ ifconfig	Muestra la configuración de los dispositivos de red
 ping	Envía paquetes a una dirección para comprobar su conectividad
 curl	Muestra por consola el archivo devuelto por la dirección
 wget	Guarda el archivo devuelto por la dirección
+
+Comprimiendo archivos con formato .tar
+El formato .tar es un tipo de compresión bastante usado en UNIX. Originalmente era utilizado para almacenar información en cintas magnéticas, así que está hecho especialmente para comprimir los archivos de forma lineal.
+
+Para comprimir con este formato en la terminal usamos el comando tar que tiene ciertas opciones para aprender.
+
+Sintaxis:
+
+tar [opciones] [nombreDelArchivoComprimido] [archivoAComprimir]
+Comprimir (-c)
+Para comprimir un archivo utilizamos la opción -c. En todos los casos hay que usar la opción -f para indicar que estamos comprimiendo o descomprimiendo archivos.
+
+tar -cf compressed.tar Documents/toCompress/
+comprimir-archivo-con-tar.png
+Ver lo que está haciendo el comando (-v)
+Si queremos ver lo que el comando está comprimiendo a medida que se va ejecutando, usamos la opción -v. Por cierto la opción -v es de “Verbose” y muchos comandos la usan, también te la puedes encontrar como --verbose.
+
+tar -cvf compressed.tar Documents/toCompress/
+comprimir-con-tar-verbose.png
+Comprimir con formato “.tar.gz” (-z)
+El formato “.tar.gz” o también “.tgz” es una versión extendida del formato tradicional de compresión “.zip” que puede manejar y comprimir archivos más grandes.
+
+Para manejar la compresión de archivos “.tar.gz” o “.tgz” se usa la opción -z además de tener que especificar en el nombre de archivo la extensión que quieres usar.
+
+tar -czvf compressed.tar.gz Documents/toCompress/
+ejemplo-para-comprimir-con-tar.gz.png
+Descomprimir (-x)
+Para descomprimir es mucho más sencillo, solo hay que especificar la opción -x y el archivo comprimido que se quiere descomprimir.
+
+Si se quiere descomprimir un archivo de extensión “.tar.gz” o “.tgz” hay que especificar la opción -z también.
+
+tar -xzvf compressed.tar.gz
+ejemplo-para-descomprimir-tar.gz.png
+Comprimiendo archivos .zip
+Para comprimir usamos el comando zip con el nombre que quieres que tenga y lo que quieres comprimir.
+
+Si quieres comprimir una carpeta con archivos dentro, tienes que especificar la opción -r de “recursive”.
+
+zip -r copressed.zip Documents/toCompress/
+como-comprimir-con-zip.png
+Y para descomprimir es incluso más fácil, solo escribe el comando unzip seguido de lo que quieres descomprimir.
+
+unzip compressed.zip
+Tabla de comandos tar y zip
+Opciones del comando tar
+Recuerda siempre colocar la opción -f.
+
+Opción	Función
+c	Comprimir
+x	Descomprimir
+z	Especifica que lo que se va a comprimir o descomprimir tiene extensión “.tar.gz” o “.tgz”
+v	Muestra lo que está comprimiendo o descomprimiendo
+Comando zip
+Recuerda que si lo que vas a comprimir es una carpeta tienes que usar la opción -r.
+
+Comando	Función
+zip	Comprimir
+unzip	Decomprimir
