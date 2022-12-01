@@ -137,4 +137,142 @@ Operador	Función
 >	Redirecciona la salida. Por defecto redirecciona el Standar Output
 >>	Concatena la salida con lo que ya tenga el archivo a donde se está redirigiendo la salida
 2>	Redirecciona el file descriptor 2 (En este caso Standar Error)
-2>&1	Redirecciona el file descriptor 2 y 1
+2>&1	Redirecciona el file descriptor 2 y 1.
+
+
+¿Cuáles son los comandos de búsqueda en la terminal?
+
+Para encontrar archivos de forma efectiva, usa el comando find, el cual buscará en la ruta que le indiques el tipo de archivos que necesitas. Su sintaxis es:
+
+find [rutaDesdeDondeEmpezarBuscar] [opciones]
+
+Segmentar por el nombre (-name)
+Veamos un ejemplo, voy a buscar en mi carpeta home todos los archivos que tenga una extensión “.png”.
+
+`find ./ -name *.png`
+
+ejemplo-comando-name.png
+El punto indica que debe empezar desde la carpeta en la que está y la opción -name es para especificar el nombre que debe buscar.
+
+Segmentar por el tipo (-type)
+También puedes segmentar por el tipo, si es un archivo o si es un directorio utilizando la opción -type, el cual acepta f para archivos, d para directorios y l para enlaces simbólicos.
+
+Si quieres usar más de una opción lo separas por comas.
+
+`find ./ -type f -name "f*"`
+
+usar-comando-type-terminal.png
+Esto me muestra todos los archivos que comiencen con la letra “f”.
+
+Veamos un ejemplo buscando archivos y directorios.
+
+`find ./ -type f,d -name "D*"`
+
+buscar-archivos-direcorios-con-comando-type-terminal.png
+Segmentar por tamaño (-size)
+Con la opción -size podemos segmentar por tamaño ingresando el peso que queremos buscar. Esta opción tiene un uso un tanto especial. Primero que todo hay que colocar la unidad de peso c para byte, k para Kilobyte, M para Megabyte y G para Gygabyte.
+
+Entonces, si escribes en la terminal:
+
+`find ./ -size 4k`
+
+Buscará los archivos que pesen exactamente 4kb. Pero claro, atinar el peso exacto de un archivo no es para nada sencillo, así que podemos especificar que sea ese peso en adelante con el símbolo + o de ese peso para abajo con el símbolo -.
+
+`find ./ -size +4k`
+
+Busca los archivos que pesen 4kb o más.
+
+`find ./ -size -4k`
+
+Busca los archivos que pesen 4kb o menos.
+
+Buscar vacíos (-empty)
+Para buscar los archivos vacíos usamos la opción empty que es fácil de usar, no tienes que especificarle nada, solo escribirla.
+
+Por ejemplo, si quisiera buscar todas las carpetas vacías, habría que escribir:
+
+`find ./ -type d -empty`
+
+como-buscar-carpetas-vacias-en-la-terminal.png
+Limitar la búsqueda (-maxdepth -mindepth)
+Puede que no queramos buscar en absolutamente todas las carpetas del sistema, sino que queremos únicamente un pedacito. Para eso limitamos la profundidad de carpetas a la que el comando debe buscar, esto se hace con la opción -maxdepth seguido de la profundidad.
+
+`find ./ -type d -maxdepth 2`
+
+Continuando, a veces ya conocemos más o menos la estructura de nuestras carpetas, así que nos queremos saltar niveles, por lo que le asignamos una profundidad mínima al comando.
+
+`find ./ -type d -mindepth 2`
+Una última cosa, es recomendable pasar el output al comando less, así:
+
+`find ./ | less`
+De esta forma podrás usar esa interfaz de less para buscar tus archivos.
+
+Tabla de comandos de búsqueda
+Opción	Función
+-size	Busca por el peso
+-mindepth	Asigna una profundidad mínima
+-maxdepth	Asigna una profundidad máxima
+-type	Busca por el tipo de archivo
+-name	Busca por el nombre del archivo
+
+Configuración de tus dispositivos (ifconfig)
+Ve a tu consola, escribe el comando ifconfig y miremos el resultado.
+
+configurar-dispositivos-con-ifconfig.png
+Cuando ingresamos el comando podemos ver el nombre del dispositivo de red, en este caso es “eth0”, y su configuración, tenemos su dirección IPv4 e IPv6 y su máscara de red.
+
+También tienes la opción del comando netstat solo que te lo mostrará de forma más amigable usando una tabla.
+
+Enviar solicitudes a una página (ping)
+A veces queremos saber si una página está disponible desde nuestra dirección IP. Para esto escribimos el comando seguido de la URL a la que queremos acceder.
+
+El comando ping envía paquetes a esa página y evalúa el tiempo de respuesta.
+
+Por defecto, el comando se ejecutará indefinidamente, así que tienes que detenerlo con ctrl + c.
+
+ping www.google.com
+De esta salida obtuvimos la dirección IP de esa URL, también cuanto tiempo tardó en responder la página medida en milisegundos y en la parte de abajo tenemos el total de paquetes que se enviaron, los paquetes que se recibieron, el porcentaje de paquetes perdidos y el tiempo de respuesta promedio de las consultas.
+
+Vamos a ver unas pocas opciones más de este comando.
+
+Limitar los paquetes enviados (-c)
+Para limitar la cantidad de paquetes que enviamos, usamos la opción -c seguida del número de paquetes por enviar.
+
+`ping -c 4 www.google.com`
+uso-de-ping-para-limitar-paquetes-enviados.png
+Especificar el tamaño de los paquetes (-s)
+Para probar la conectividad con paquetes de diferentes tamaños se utiliza la opción -s seguido del tamaño del paquete que desees usar. El tamaño debe ser en bytes.
+
+Para hacer pruebas con paquetes de 20 bytes escribimos:
+
+`ping -s 20 www.google.com`
+uso-de-ping-especificar-tamaño-de-paquetes.png
+Obtener el archivo de una página (curl | wget)
+Podemos obtener archivos que nos proporcione un sitio web o dirección IP con el comando curl. Este te mostrará la información que haya encontrado en la consola.
+
+`curl www.google.com`
+Al ejecutar este comando te dará el documento “.html” de Google, el cual lo verás como un montón de letras locas si estás empezando.
+
+El comando wget hace algo similar, solo que en vez de mostrar lo que h obtenido por consola lo guarda en el archivo que le especifiques.
+
+`wget www.google.com`
+uso-de-comando-wget.png
+La última línea de la salida del comando wget dice que la información fue guardada en el archivo “index.html”, el cual podemos ver al listar los archivos.
+
+También podemos específicar varias direcciones para descargar varias páginas al mismo tiempo.
+
+`wget www.google.com www.google.com`
+ejemplo-uso-wget.png
+Aquí vemos como se guardó la página de Google en “index.html.1” y la de google en “index.html.2”.
+
+Ruta de acceso a la página (traceroute)
+Cuando nos conectamos a una página en internet no nos conectamos directamente a los servidores en los que está almacenada esa página, sino que primero pasamos por otros servidores que son como intermediarios entre tu computadora y el servidor.
+
+Puedes profundizar aún más sobre el tema con el Curso de Redes Informáticas de Internet de Platzi.
+
+Tabla de comandos de utilidades de red
+Comando	Función
+ifconfig	Muestra la configuración de los dispositivos de red
+ping	Envía paquetes a una dirección para comprobar su conectividad
+curl	Muestra por consola el archivo devuelto por la dirección
+wget	Guarda el archivo devuelto por la dirección
